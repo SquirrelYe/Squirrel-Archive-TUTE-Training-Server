@@ -1,7 +1,7 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const wx_api=require('./interface/wx_api/wx_api')
-const mail = require('./interface/mail/mail')
+const tuling_api=require('./interface/tuling_api/tuling_api')
 
 var server=express();
 server.listen(11111);
@@ -27,5 +27,10 @@ server.use('/wx_api',function(req,res){        //前台调用，返还wx_api dat
     if(req.query.judge==0)  wx_api.selectOpenidUnionid(req,res);
     if(req.query.judge==1)  wx_api.selectAccessToken(req,res);
     if(req.query.judge==3)  wx_api.sendTemplateMsg(req,res);
+    if(req.query.judge==null) res.redirect('./WWW/404/QYZQ.html');
+});
+
+server.use('/tuling_api',function(req,res){
+    if(req.query.judge==1)  tuling_api.sendTulingMsg(req,res);
     if(req.query.judge==null) res.redirect('./WWW/404/QYZQ.html');
 });
